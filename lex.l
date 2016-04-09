@@ -15,8 +15,8 @@ operadores	*|+|-|/
 {id}		{printf("PR id\n");		return ID;}
 {nument}	{printf("nument\n");	return ENTERO;}
 {numf}		{printf("numf\n");		return FLOTANTE;}
-"begin"		{printf("PR begin\n");	return PR_BEGIN;}
 "end"		{printf("PR end\n");	return PR_END;}
+"begin"		{printf("PR begin\n");	return PR_BEGIN;}
 "int"		{printf("PR int\n");	return PR_INT;}
 "float"		{printf("PR float\n");	return PR_FLOAT;}
 "if"        {printf("PR if\n");		return IF;}
@@ -38,7 +38,6 @@ operadores	*|+|-|/
 "="			{printf("SIM =\n");		return IGUAL;}
 ":="		{printf("SIM := \n");	return ASSIGN;}
 ";"			{printf("SIM ;\n");		return PCOM;}
-.           {printf("ERROR LEXICO EN LINEA %d \n",yylineno);}
 %%
 
 int main(int argc,char *argv[]) {
@@ -47,8 +46,8 @@ int main(int argc,char *argv[]) {
 	}
 	else {
 		//yylex();
-		//yyparse();
-		printf("Archivo abierto\n");
+		//printf("Archivo abierto\n");
+		yyparse();
 	}
 	fclose(yyin);
 	return 0;

@@ -61,7 +61,6 @@ stmt 	:	ID ASSIGN expr
 		;
 
 opt_stmts 	:	stmt_lst
-			|
 			;
 
 stmt_lst 	:	stmt_lst PCOM stmt
