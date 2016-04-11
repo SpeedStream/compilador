@@ -1,11 +1,34 @@
 %{
-int yystopparser=0;
+	#include <stdlib.h>
+	#include <string.h>
+	#include "symbols.h"
+	int errores = 0;
+
+	addSymbol(char *symbolName){
+		symTable *s;
+		s = getSymbol(symbolName);
+		if (s == 0){		//El símbolo no existe.
+			printf("El simbolo %s no existe\n", symbolName);
+			s = putSymbol(symbolName);
+		} else{		//El símbolo existe
+			errores++;
+			printf("El simbolo %s ya existe\n", symbolName);
+		}
+		printf("Errores: %i\n", errores);
+	}
 %}
  
+/*TIPOS*/
+%union{
+	int 	intval;
+	float 	fval;
+	char	*name;
+};
+/*TIPOS*/
 /*TOKENS*/
-	%token ID
-	%token ENTERO
-	%token FLOTANTE
+	%token <name>	ID
+	%token <intval>	ENTERO
+	%token <fval>	FLOTANTE
 	%token PR_BEGIN
 	%token PR_END
 	%token PR_INT
@@ -30,6 +53,11 @@ int yystopparser=0;
 	%token ASSIGN
 	%token PCOM
 /*TOKENS*/
+
+/*ORDEN DE OPERADORES*/
+	%left ADD SUB
+	%left MULT DIV
+/*ORDEN DE OPERADORES*/
 %start prg
  
 %%
@@ -44,7 +72,7 @@ decls 	:	decls PCOM dec
 		|	dec
 		;
 
-dec 	:	tipo ID
+dec 	: tipo ID 	{printf("Simbolo: %s\n", $2); addSymbol( $2 ); }
 		;
 
 tipo	:	PR_INT

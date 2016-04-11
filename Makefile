@@ -1,19 +1,19 @@
-all: fin
+all: fin run
 
 fin: lex yacc bison
-	gcc -o compilador lex.yy.c y.tab.c -ly -ll -lm
+	gcc -w -o compilador lex.yy.c y.tab.c -ly -ll -lm
 
 lex:
-	lex lex.l
+	lex scanner.l
 
 yacc:
-	yacc -d yacc.y
+	yacc -d gramatica.y
 
 bison:
-	bison -d yacc.y
+	bison -d gramatica.y
 
 run:
-	./compilador hw.txt
+	./compilador prueba1.txt
 
 git:
 	$ git add .
@@ -22,4 +22,4 @@ git:
 	$ git push origin master
 
 clean:
-	rm -rf *o compilador *.c *.h
+	rm -rf *o compilador *.c gramatica.tab.* y.tab*
